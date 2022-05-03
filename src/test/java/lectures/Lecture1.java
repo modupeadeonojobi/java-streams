@@ -22,6 +22,13 @@ public class Lecture1 {
     // 1. Find people aged less or equal 18
     // 2. Then change implementation to find first 10 people
 
+    int counter = 0;
+    for (int i = 0; i < 50; i++) {
+      if (people.get(i).getAge() <= 18 && counter != 10) {
+        counter++;
+        System.out.println(people.get(i));
+      }
+    }
   }
 
   @Test
