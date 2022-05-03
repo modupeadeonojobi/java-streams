@@ -24,5 +24,6 @@ public class Lecture2 {
 
   @Test
   public void intStreamIterate() throws Exception {
+    IntStream.iterate(0, operand -> operand + 1).filter(num -> num % 2 == 0).limit(20).forEach(System.out::println);
   }
 }
