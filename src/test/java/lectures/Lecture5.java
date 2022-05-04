@@ -22,6 +22,8 @@ public class Lecture5 {
     carFiltered.forEach(System.out::println);
 
   }
+//  PersonDTO::map is called method reference.
+//  A static method called map() was created for this purpose.
 
   @Test
   public void ourFirstMapping() throws Exception {
@@ -30,19 +32,22 @@ public class Lecture5 {
     List<PersonDTO> personDTOS = people.stream().map(PersonDTO::map).collect(Collectors.toList());
     personDTOS.forEach(System.out::println);
 
-
   }
+
+  //  Car::getPrice is called method reference.
+  //  A method called getPrice() was created.
 
   @Test
   public void averageCarPrice() throws Exception {
     // calculate average of car prices
     ImmutableList<Car> cars = MockData.getCars();
-
-
+    double carAveragePrice = cars.stream().mapToDouble(Car::getPrice).average().orElse(0);
+    System.out.println(carAveragePrice);
   }
 
   @Test
   public void test() throws Exception {
+    MockData.getCars().forEach(System.out::println);
 
   }
 }
