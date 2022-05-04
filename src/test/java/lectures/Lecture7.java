@@ -1,38 +1,52 @@
 package lectures;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import beans.Car;
-import com.google.common.collect.ImmutableList;
-import java.math.BigDecimal;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
-import java.util.stream.Collectors;
 import mockdata.MockData;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.util.DoubleSummaryStatistics;
+import java.util.List;
+import java.util.function.Predicate;
+
 public class Lecture7 {
+
+  private final Predicate<Car> getYellowCars =  car -> car.getColor().equalsIgnoreCase("yellow");
+
 
   @Test
   public void count() throws Exception {
+    long totalFemale = MockData.getPeople().stream().filter(person -> person.getGender().equalsIgnoreCase("female")).count();
+    System.out.println(totalFemale);
 
   }
 
   @Test
   public void min() throws Exception {
-
+    double minPriceOfYellowCars = MockData.getCars().stream()
+            .filter(getYellowCars)
+            .mapToDouble(Car::getPrice).min().getAsDouble();
+    System.out.println(minPriceOfYellowCars);
   }
+
 
   @Test
   public void max() throws Exception {
-
+    double maxPriceOfYellowCars = MockData.getCars().stream()
+            .filter(getYellowCars)
+            .mapToDouble(Car::getPrice).max().orElse(0);
+    System.out.println(maxPriceOfYellowCars);
   }
 
 
   @Test
   public void average() throws Exception {
-    List<Car> cars = MockData.getCars();
+    double averagePriceOfYellowCars = MockData.getCars()
+            .stream()
+            .filter(getYellowCars)
+            .mapToDouble(Car::getPrice).average().orElse(0);
+    System.out.println(averagePriceOfYellowCars);
 
   }
 
@@ -43,23 +57,22 @@ public class Lecture7 {
         .mapToDouble(Car::getPrice)
         .sum();
     BigDecimal bigDecimalSum = BigDecimal.valueOf(sum);
-    System.out.println(sum);
     System.out.println(bigDecimalSum);
+    System.out.println(sum);
 
   }
 
   @Test
   public void statistics() throws Exception {
     List<Car> cars = MockData.getCars();
-    DoubleSummaryStatistics statistics = cars.stream()
-        .mapToDouble(Car::getPrice)
-        .summaryStatistics();
-    System.out.println(statistics);
-    System.out.println(statistics.getAverage());
-    System.out.println(statistics.getCount());
-    System.out.println(statistics.getMax());
-    System.out.println(statistics.getMin());
-    System.out.println(statistics.getSum());
+    DoubleSummaryStatistics doubleSummaryStatistics = cars.stream()
+            .mapToDouble(Car::getPrice)
+            .summaryStatistics();
+    System.out.println(doubleSummaryStatistics.getCount());
+    System.out.println(doubleSummaryStatistics.getMin());
+    System.out.println(doubleSummaryStatistics.getMax());
+    System.out.println(doubleSummaryStatistics.getAverage());
+    System.out.println(BigDecimal.valueOf(doubleSummaryStatistics.getSum()));
   }
 
 }
