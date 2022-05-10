@@ -21,16 +21,29 @@ public class Lecture10 {
     System.out.println(arrayListOfNames);
   }
 
+//  flatMap takes elements in different arrayList and combine it into one list.
+
   @Test
   public void withoutFlatMap() throws Exception {
 //    [Mariam, Alex, Ismail, John, Alesha, Andre, Susy, Ali]
 
+    List<String> names = Lists.newArrayList();
+    for (List<String> listOfNames: arrayListOfNames) {
+      for (String name : listOfNames) {
+        names.add(name);
+      }
+    }
+    System.out.println(names);
   }
 
   @Test
   public void withFlatMap() throws Exception {
 //   [Mariam, Alex, Ismail, John, Alesha, Andre, Susy, Ali]
 
+    List<String> names = arrayListOfNames.stream()
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
+    System.out.println(names);
   }
 
 }
